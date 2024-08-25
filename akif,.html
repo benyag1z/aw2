@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sürpriz!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(120deg, #f093fb, #f5576c);
+            font-family: 'Pacifico', cursive;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+        }
+        #clickButton {
+            padding: 20px 50px;
+            font-size: 36px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        #clickButton:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        #content {
+            text-align: center;
+            display: none;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h1 {
+            font-size: 56px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin: 0;
+        }
+        img {
+            width: 250px;
+            margin-top: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <button id="clickButton">BASMAYAN OC!</button>
+    <div id="content">
+        <h1>AKİF YARIN EKMEĞİNİN PEŞİNDE!</h1>
+        <iframe src="https://giphy.com/embed/3rPAeOR9sVpFvNGPtn" width="480" height="269" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/basketball-johnnysins-danidaniels-3rPAeOR9sVpFvNGPtn">AKLIMI KAYBEDİCEM YARDIM EDİN</a></p>
+    </div>
+    <canvas id="confetti"></canvas>
+    <audio id="backgroundMusic" autoplay hidden>
+        <source src="https://drive.google.com/uc?export=download&id=1wlQTBv1rjBN8glP2aEU5XugFhmCZlj31" type="audio/mp3">
+        Tarayıcınız bu sesi çalamıyor.
+    </audio>
+
+    <script>
+        document.getElementById('clickButton').addEventListener('click', function() {
+            document.getElementById('clickButton').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('backgroundMusic').play();
+            startConfetti();
+        });
+
+        // Confetti Script
+        var confettiSettings = { target: 'confetti', max: 100, size: 1 };
+        var confetti = new ConfettiGenerator(confettiSettings);
+        function startConfetti() {
+            confetti.render();
+            setTimeout(() => confetti.clear(), 5000);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+</body>
+</html>
