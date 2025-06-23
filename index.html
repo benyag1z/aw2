@@ -13,8 +13,8 @@
       height: 100vh;
       overflow: hidden;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     #container {
@@ -25,10 +25,12 @@
       white-space: pre-wrap;
     }
 
-    #highlight {
-      font-size: 28px;
+    #final {
+      font-size: 30px;
       font-weight: bold;
-      color: white;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 1s ease-in;
     }
 
     .light {
@@ -38,12 +40,11 @@
       width: 100%;
       height: 0;
       background: linear-gradient(to top, white, transparent);
-      animation: riseLight 6s ease-out forwards;
+      animation: riseLight 5s ease-in-out forwards;
     }
 
     @keyframes riseLight {
       0% { height: 0; opacity: 0; }
-      50% { height: 40%; opacity: 0.5; }
       100% { height: 100%; opacity: 1; }
     }
 
@@ -55,7 +56,7 @@
       background-color: white;
       opacity: 0;
       animation: flashWhite 3s ease-in forwards;
-      animation-delay: 7s;
+      animation-delay: 6s;
     }
 
     @keyframes flashWhite {
@@ -68,7 +69,7 @@
   <div id="container"></div>
 
   <script>
-    const text = `Yorgunluk, bahane değildir.
+    const yazilar = `Yorgunluk, bahane değildir.
 
 Her sabah doğan güneş, yeniden başlamak için bir çağrıdır.
 
@@ -83,40 +84,40 @@ Zihin, disiplinle şekillenir. Güç, tekrarlarla doğar.
 Ve sen, bu karaktere sahipsin.
 
 Unutma...\n\n`;
-    const finalText = "Karanlıkta her zaman bir ışık vardır.\nOnu görmemiz yeterlidir.";
 
-    let i = 0;
+    const finalText = `Karanlıkta her zaman bir ışık vardır.\nOnu görmemiz yeterlidir.`;
+
     const container = document.getElementById("container");
+    let i = 0;
 
-    function typeWriter() {
-      if (i < text.length) {
-        container.textContent += text.charAt(i);
+    function yazdir() {
+      if (i < yazilar.length) {
+        container.textContent += yazilar.charAt(i);
         i++;
-        setTimeout(typeWriter, 40);
+        setTimeout(yazdir, 40);
       } else {
-        // Yazı bittiğinde büyük metni göster
-        setTimeout(showFinalText, 500);
+        // Final yazıyı büyük göster
+        setTimeout(() => {
+          const final = document.createElement("div");
+          final.id = "final";
+          final.textContent = finalText;
+          container.appendChild(final);
+          setTimeout(() => final.style.opacity = 1, 100);
+
+          // Işık efekti
+          const light = document.createElement("div");
+          light.className = "light";
+          document.body.appendChild(light);
+
+          // Tam beyaz ekran efekti
+          const white = document.createElement("div");
+          white.className = "whiteout";
+          document.body.appendChild(white);
+        }, 500);
       }
     }
 
-    function showFinalText() {
-      const highlight = document.createElement("div");
-      highlight.id = "highlight";
-      highlight.textContent = finalText;
-      container.appendChild(highlight);
-
-      // Işık animasyonu başlasın
-      const lightDiv = document.createElement("div");
-      lightDiv.classList.add("light");
-      document.body.appendChild(lightDiv);
-
-      // Tüm ekranı beyaza boyayan efekt
-      const whiteout = document.createElement("div");
-      whiteout.classList.add("whiteout");
-      document.body.appendChild(whiteout);
-    }
-
-    typeWriter();
+    yazdir();
   </script>
 </body>
 </html>
