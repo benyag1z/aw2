@@ -23,13 +23,12 @@
       font-size: 20px;
       line-height: 1.6;
       white-space: pre-wrap;
-      border-right: 2px solid white;
-      animation: blink 1s step-end infinite;
     }
 
-    @keyframes blink {
-      from, to { border-color: transparent }
-      50% { border-color: white }
+    #highlight {
+      font-size: 28px;
+      font-weight: bold;
+      color: white;
     }
 
     .light {
@@ -39,13 +38,29 @@
       width: 100%;
       height: 0;
       background: linear-gradient(to top, white, transparent);
-      animation: riseLight 3s ease-out forwards;
+      animation: riseLight 6s ease-out forwards;
     }
 
     @keyframes riseLight {
       0% { height: 0; opacity: 0; }
-      30% { opacity: 0.7; }
-      100% { height: 100%; opacity: 0; }
+      50% { height: 40%; opacity: 0.5; }
+      100% { height: 100%; opacity: 1; }
+    }
+
+    .whiteout {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0;
+      animation: flashWhite 3s ease-in forwards;
+      animation-delay: 7s;
+    }
+
+    @keyframes flashWhite {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
@@ -67,11 +82,8 @@ Zihin, disiplinle şekillenir. Güç, tekrarlarla doğar.
 
 Ve sen, bu karaktere sahipsin.
 
-Unutma...
-
-Karanlıkta her zaman bir ışık vardır.
-
-Onu görmemiz yeterlidir.`;
+Unutma...\n\n`;
+    const finalText = "Karanlıkta her zaman bir ışık vardır.\nOnu görmemiz yeterlidir.";
 
     let i = 0;
     const container = document.getElementById("container");
@@ -81,18 +93,27 @@ Onu görmemiz yeterlidir.`;
         container.textContent += text.charAt(i);
         i++;
         setTimeout(typeWriter, 40);
-      }
-
-      // Işık animasyonu tetikleme – son cümleye yaklaşınca
-      if (i === Math.floor(text.length * 0.93)) {
-        showLight();
+      } else {
+        // Yazı bittiğinde büyük metni göster
+        setTimeout(showFinalText, 500);
       }
     }
 
-    function showLight() {
+    function showFinalText() {
+      const highlight = document.createElement("div");
+      highlight.id = "highlight";
+      highlight.textContent = finalText;
+      container.appendChild(highlight);
+
+      // Işık animasyonu başlasın
       const lightDiv = document.createElement("div");
       lightDiv.classList.add("light");
       document.body.appendChild(lightDiv);
+
+      // Tüm ekranı beyaza boyayan efekt
+      const whiteout = document.createElement("div");
+      whiteout.classList.add("whiteout");
+      document.body.appendChild(whiteout);
     }
 
     typeWriter();
